@@ -1,6 +1,6 @@
 package Duke.Utility;
 
-import Duke.Tasks.*;
+import Duke.Tasks.Tasks;
 
 import java.util.HashMap;
 import java.util.Scanner;

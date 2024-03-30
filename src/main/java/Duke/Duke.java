@@ -1,11 +1,15 @@
 package Duke;
 
-import Duke.Command.*;
-import Duke.Tasks.*;
-import Duke.Utility.*;
+import Duke.Command.Command;
+import Duke.Tasks.Tasks;
+
+import Duke.Utility.InputParser;
+import Duke.Utility.Storage;
+import Duke.Utility.TaskList;
+import Duke.Utility.UI;
+import Duke.Utility.DukeException;
 
 public class Duke extends Tasks {
-
     private final Storage storage;
     private TaskList taskList;
     private final UI ui;
@@ -26,7 +30,7 @@ public class Duke extends Tasks {
         }
     }
 
-    public void run() throws DukeException {
+    public void run() {
         ui.show("welcome");
         boolean isExit = false;
 

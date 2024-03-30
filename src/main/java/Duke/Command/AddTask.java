@@ -1,7 +1,10 @@
 package Duke.Command;
 
-import Duke.Tasks.*;
-import Duke.Utility.*;
+import Duke.Tasks.Tasks;
+import Duke.Utility.Storage;
+import Duke.Utility.TaskList;
+import Duke.Utility.UI;
+
 import java.io.IOException;
 
 public class AddTask extends Command {

@@ -1,11 +1,13 @@
 package Duke.Command;
 
-import Duke.Command.*;
-import Duke.Tasks.*;
-import Duke.Utility.*;
+import Duke.Utility.DukeException;
+import Duke.Utility.Storage;
+import Duke.Utility.UI;
+import Duke.Utility.TaskList;
+import Duke.Tasks.Tasks;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FindTask extends Command {
@@ -36,7 +38,6 @@ public class FindTask extends Command {
         ui.show("line");
 
     }
-
 
     @Override
     public boolean isExit() {

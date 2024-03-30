@@ -1,7 +1,7 @@
 package Duke.Utility;
 
 public class DukeException extends Exception {
-    public DukeException (String Message) {
+    public DukeException(String Message) {
         super(Message);
     }
 }

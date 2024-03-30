@@ -1,12 +1,13 @@
 package Duke.Command;
 
-import Duke.Tasks.Tasks;
-import Duke.Utility.*;
+import Duke.Utility.Storage;
+import Duke.Utility.UI;
+import Duke.Utility.TaskList;
+
 import java.io.IOException;
-import java.util.*;
 
 
-public class listTask extends Command {
+public class ListTask extends Command {
     public void execute(TaskList tskList, UI ui, Storage store) {
 
         ui.show("list");

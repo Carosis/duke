@@ -1,7 +1,9 @@
 package Duke.Command;
 
-import Duke.Utility.*;
-import Duke.Tasks.*;
+import Duke.Utility.Storage;
+import Duke.Utility.UI;
+import Duke.Utility.TaskList;
+import Duke.Tasks.Tasks;
 
 import java.io.IOException;
 
@@ -31,9 +33,7 @@ public class DeleteTask extends Command {
             ui.showError("Failed to remove the incantation: " + e.getMessage() + " ! Meow!");
         }
 
-
     }
-
     @Override
     public boolean isExit() {
         return false;

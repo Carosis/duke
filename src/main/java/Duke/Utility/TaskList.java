@@ -1,6 +1,6 @@
 package Duke.Utility;
 
-import Duke.Tasks.*;
+import Duke.Tasks.Tasks;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class TaskList extends Tasks {
     }
 
     public Tasks getTask(int index) {
-            return storedTaskList.get(index - 1);
+        return storedTaskList.get(index - 1);
     }
 
     public void deleteTask(int index) {
@@ -40,7 +40,8 @@ public class TaskList extends Tasks {
             i++;
         }
     }
+
     public void printTask(Tasks taskToPrint) {
-            System.out.println(taskToPrint.toString());
+        System.out.println(taskToPrint.toString());
     }
 }

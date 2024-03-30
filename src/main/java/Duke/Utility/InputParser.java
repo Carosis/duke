@@ -1,17 +1,32 @@
 package Duke.Utility;
 
-import Duke.Command.*;
-import Duke.Tasks.*;
+import Duke.Command.AddTask;
+import Duke.Command.Command;
+import Duke.Command.SnoozeTask;
+import Duke.Command.UpdateTask;
+import Duke.Command.DeleteTask;
+import Duke.Command.PrintBye;
+import Duke.Command.ListTask;
+import Duke.Command.MarkTask;
+import Duke.Command.FindTask;
+import Duke.Tasks.DeadlineTask;
+import Duke.Tasks.DoWithInTimeTask;
+import Duke.Tasks.EventTask;
+import Duke.Tasks.TodoTask;
 
+import java.time.DayOfWeek;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.time.*;
-import java.time.temporal.*;
-import java.time.format.*;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class InputParser {
-    private Map<String, CommandHandler> commandMap;
+    private final Map<String, CommandHandler> commandMap;
 
     public InputParser() {
         commandMap = new HashMap<>();
@@ -31,14 +46,14 @@ public class InputParser {
 
     public Command parse(String input) throws DukeException {
         String[] parts = input.split(" ");
-        String command ;
-        String argument ;
+        String command;
+        String argument;
         CommandHandler handler;
         if (Arrays.asList(parts).contains("between") && Arrays.asList(parts).contains("and")) {
             argument = input.toLowerCase();
             handler = commandMap.get("DoWithInPeriod");
         } else {
-            String[] actualParts = input.split(" ",2);
+            String[] actualParts = input.split(" ", 2);
             command = actualParts[0].toLowerCase();
             argument = actualParts.length > 1 ? actualParts[1] : "";
             handler = commandMap.get(command);
@@ -113,19 +128,21 @@ public class InputParser {
         if (parts[1].equals("between") && Arrays.asList(parts).contains("and")) {
             transferInfo = new String[]{parts[0], parts[1], updateInfo[1], updateInfo[2]};
         }
+
         try {
             return new UpdateTask(transferInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The update format incorrect meow.");
         }
     }
+
     private Command snoozeTask(String argument) throws DukeException {
 
         String[] snoozeInfo = argument.split("\\b(?: for )\\b");
         if (snoozeInfo.length < 2) {
             throw new DukeException("Invalid snooze format: " + argument);
         }
-        String[] transferInfo =  new String[]{snoozeInfo[0], snoozeInfo[1]};
+        String[] transferInfo = new String[]{snoozeInfo[0], snoozeInfo[1]};
 
         try {
             return new SnoozeTask(transferInfo);
@@ -144,29 +161,31 @@ public class InputParser {
     }
 
     private Command printBye(String argument) {
-        return new printBye();
+        return new PrintBye();
     }
 
     private Command listTask(String argument) {
-        return new listTask();
+        return new ListTask();
     }
 
     private Command markTask(String argument) throws DukeException {
-        String[] markInfo = {"mark",argument};
+        String[] markInfo = {"mark", argument};
         try {
             return new MarkTask(markInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The mark must come with int meow.");
         }
     }
+
     private Command unmarkTask(String argument) throws DukeException {
-        String[] unmarkInfo = {"unmark",argument};
+        String[] unmarkInfo = {"unmark", argument};
         try {
             return new MarkTask(unmarkInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The find must come with keywords meow.");
         }
     }
+
     private Command searchTask(String argument) throws DukeException {
         try {
             return new FindTask(argument);
@@ -186,7 +205,7 @@ public class InputParser {
             return LocalDateTime.now().minusDays(1);
         } else if (argument.equals("now")) {
             return LocalDateTime.now();
-        }else if (isValidDayOfWeek(argument)) {
+        } else if (isValidDayOfWeek(argument)) {
             DayOfWeek dayOfWeek = DayOfWeek.valueOf(argument.toUpperCase());
             LocalDate nextOccurrence = LocalDate.now().with(TemporalAdjusters.nextOrSame(dayOfWeek));
             return nextOccurrence.atStartOfDay();

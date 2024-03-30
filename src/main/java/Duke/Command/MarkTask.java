@@ -1,7 +1,10 @@
 package Duke.Command;
 
-import Duke.Tasks.*;
-import Duke.Utility.*;
+import Duke.Tasks.Tasks;
+import Duke.Utility.DukeException;
+import Duke.Utility.Storage;
+import Duke.Utility.UI;
+import Duke.Utility.TaskList;
 
 import java.io.IOException;
 
@@ -30,7 +33,6 @@ public class MarkTask extends Command {
         } catch (IOException e) {
             ui.showError("Failed to remove the incantation: " + e.getMessage() + " ! Meow!");
         }
-
 
     }
 
