@@ -26,6 +26,7 @@ public class InputParser {
         commandMap.put("update", this::updateTask);
         commandMap.put("DoWithInPeriod", this::AddBTask);
         commandMap.put("snooze", this::snoozeTask);
+        commandMap.put("find", this::searchTask);
     }
 
     public Command parse(String input) throws DukeException {
@@ -163,7 +164,14 @@ public class InputParser {
         try {
             return new MarkTask(unmarkInfo);
         } catch (NumberFormatException e) {
-            throw new DukeException(" Meow!!! The mark must come with int meow.");
+            throw new DukeException(" Meow!!! The find must come with keywords meow.");
+        }
+    }
+    private Command searchTask(String argument) throws DukeException {
+        try {
+            return new FindTask(argument);
+        } catch (Exception e) {
+            throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
 

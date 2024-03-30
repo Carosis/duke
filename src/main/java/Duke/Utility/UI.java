@@ -16,6 +16,7 @@ public class UI {
     private static final String TaskDeleted = "Meowted. I've removed this magics:";
     private static final String FileError = "YumiKunKun failed to find the magic file meow!";
     private static final String updateMsg = "YumiKunKun updated the magic file meow!";
+    private static final String searchMsg = "YumiKunKun found the magic file meow!";
     private static final String Logo =
             " ____        _        \n"
                     + "|  _ \\ _   _| | _____ \n"
@@ -38,6 +39,7 @@ public class UI {
         messagesMap.put("line", LineOfLine);
         messagesMap.put("logo", "Hello from\n" + Logo);
         messagesMap.put("update", updateMsg);
+        messagesMap.put("search", searchMsg);
     }
 
     public void show(String key) {

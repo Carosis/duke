@@ -40,4 +40,7 @@ public class TaskList extends Tasks {
             i++;
         }
     }
+    public void printTask(Tasks taskToPrint) {
+            System.out.println(taskToPrint.toString());
+    }
 }
