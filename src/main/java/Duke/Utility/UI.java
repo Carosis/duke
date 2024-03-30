@@ -59,7 +59,11 @@ public class UI {
 
     public String readCommand() {
         Scanner scan = new Scanner(System.in);
-        return scan.nextLine().trim();
+        if (scan.hasNextLine()) {
+            return scan.nextLine().trim();
+        } else {
+            return "goodbye";
+        }
     }
 
     public void printNumberOfTask(TaskList tskList) {

@@ -1,5 +1,7 @@
 package Duke.Tasks;
 
+import Duke.Utility.DukeException;
+
 public class Tasks {
     protected String description;
     protected boolean isDone;
@@ -25,11 +27,19 @@ public class Tasks {
         return isDone;
     }
 
-    public void setIsDone(boolean done) {
-        isDone = done;
+    public void setIsDone(boolean done) throws DukeException {
+        if (isDone == done) {
+            throw new DukeException("Meow!!! The mark almeowdy done.");
+        } else {
+            isDone = done;
+        }
     }
-    public void setIsNotDone(boolean done) {
-        isDone = done;
+    public void setIsNotDone(boolean done) throws DukeException {
+        if (isDone == done) {
+            throw new DukeException("Meow!!! The mark malmeowdy not done.");
+        } else {
+            isDone = done;
+        }
     }
     public String getTaskType() {
         return taskType;

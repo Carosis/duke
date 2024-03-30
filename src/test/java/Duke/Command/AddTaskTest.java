@@ -1,6 +1,7 @@
 package Duke.Command;
 
 import Duke.Tasks.*;
+import Duke.Utility.DukeException;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ public class AddTaskTest {
     }
 
     @Test
-    public void testGetStatus() {
+    public void testGetStatus() throws DukeException {
         Tasks tsk = new Tasks("TaskTest");
         tsk.setIsDone(true);
         String test = tsk.getStatusIcon();

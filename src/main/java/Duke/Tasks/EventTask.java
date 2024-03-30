@@ -30,6 +30,6 @@ public class EventTask extends Tasks {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (From: " + taskFrom + ") (To: " + taskTo + ")";
+        return "[" + taskType + "]" + super.toString() + " (From: " + taskFrom + ") (To: " + taskTo + ")";
     }
 }

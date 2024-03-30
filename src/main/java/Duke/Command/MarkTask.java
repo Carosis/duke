@@ -12,7 +12,7 @@ public class MarkTask extends Command {
         this.userInputs = UserInput;
     }
 
-    public void execute(TaskList tskList, UI ui, Storage store) {
+    public void execute(TaskList tskList, UI ui, Storage store) throws DukeException {
         Tasks tsk = tskList.storedTaskList.get(Integer.parseInt(userInputs[1]) - 1);
 
         if (userInputs[0].equals("mark")) {
