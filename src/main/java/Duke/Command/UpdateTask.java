@@ -14,7 +14,12 @@ import Duke.Utility.InputParser;
 public class UpdateTask extends Command {
     private final String[] userInputs;
     private final InputParser inputParser = new InputParser();
-
+    private final String UPDATE_MESSAGE = "update";
+    private final String INVALID_DESCRIPTION_MESSAGE = "Invalid description meow!";
+    private final String INVALID_UPDATE_EVENT_TO_MESSAGE = "Invalid update event to meow!";
+    private final String INVALID_UPDATE_DEADLINE_TO_MESSAGE = "Invalid update deadline to meow!";
+    private final String INVALID_INPUT_MESSAGE = "Invalid input meow!";
+    private final String LINE_SEPARATOR = "line";
     public UpdateTask(String[] UserInput) {
         this.userInputs = UserInput;
     }
@@ -27,10 +32,10 @@ public class UpdateTask extends Command {
             case "description":
                 try {
                     tsk.setDescription(userInputs[2]);
-                    ui.show("update");
+                    ui.show(UPDATE_MESSAGE);
                     ui.printTaskMsg(tsk.toString());
                 } catch (ClassCastException e) {
-                    System.err.println("Invalid description meow!");
+                    System.err.println(INVALID_DESCRIPTION_MESSAGE);
                 }
                 break;
             case "from":
@@ -42,10 +47,10 @@ public class UpdateTask extends Command {
                         String tempTo = inputParser.formatOutput(inputParser.parseDate(userInputs[3]));
                         temp.setTo(tempTo);
                     }
-                    ui.show("update");
+                    ui.show(UPDATE_MESSAGE);
                     ui.printTaskMsg(tsk.toString());
                 }catch (ClassCastException | DukeException e) {
-                    System.err.println("Invalid update event to meow!");
+                    System.err.println(INVALID_UPDATE_EVENT_TO_MESSAGE);
                 }
                 break;
             case "to":
@@ -53,22 +58,21 @@ public class UpdateTask extends Command {
                     EventTask temp = (EventTask) tsk;
                     String tempTo = inputParser.formatOutput(inputParser.parseDate(userInputs[2]));
                     temp.setTo(tempTo);
-                    ui.show("update");
+                    ui.show(UPDATE_MESSAGE);
                     ui.printTaskMsg(tsk.toString());
                 } catch (ClassCastException | DukeException e) {
-                    System.err.println("Invalid update event to meow!");
+                    System.err.println(INVALID_UPDATE_DEADLINE_TO_MESSAGE);
                 }
                 break;
             case "by":
                 try {
                     DeadlineTask deadlineTask = (DeadlineTask) tsk;
-                    System.out.println("userInputs[2]: " + userInputs[2]);
                     String tempBy = inputParser.formatOutput(inputParser.parseDate(userInputs[2]));
                     deadlineTask.setBy(tempBy);
-                    ui.show("update");
+                    ui.show(UPDATE_MESSAGE);
                     ui.printTaskMsg(tsk.toString());
                 } catch (ClassCastException | DukeException e) {
-                    System.err.println("Invalid update deadline to meow!");
+                    System.err.println(INVALID_INPUT_MESSAGE);
                 }
                 break;
             case "between":
@@ -80,15 +84,15 @@ public class UpdateTask extends Command {
                         String tempEnd = inputParser.formatOutput(inputParser.parseDate(userInputs[3]));
                         temp.setTo(tempEnd);
                     }
-                    ui.show("update");
+                    ui.show(UPDATE_MESSAGE);
                     ui.printTaskMsg(tsk.toString());
                 }catch (ClassCastException | DukeException e) {
-                    System.err.println("Invalid update event to meow!");
+                    System.err.println(INVALID_INPUT_MESSAGE);
                 }
                 break;
             default:
-                System.err.println("Invalid input meow!");
-                ui.show("line");
+                System.err.println(INVALID_INPUT_MESSAGE);
+                ui.show(LINE_SEPARATOR);
         }
 
     }

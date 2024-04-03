@@ -12,7 +12,9 @@ import java.util.List;
 
 public class FindTask extends Command {
     private final String keyword;
-
+    private final String NO_TASKS_FOUND_MESSAGE = "Meow? Nothing found meow!";
+    private final String SEARCH_MESSAGE = "search";
+    private final String LINE_SEPARATOR = "line";
     public FindTask(String UserInput) {
         this.keyword = UserInput;
     }
@@ -28,14 +30,14 @@ public class FindTask extends Command {
             }
         }
         if (foundTasks.isEmpty()) {
-            throw new DukeException("Meow? Nothing found meow!");
+            throw new DukeException(NO_TASKS_FOUND_MESSAGE);
         } else {
-            ui.show("search");
+            ui.show(SEARCH_MESSAGE);
             for (Tasks t : foundTasks) {
                 tskList.printTask(t);
             }
         }
-        ui.show("line");
+        ui.show(LINE_SEPARATOR);
 
     }
 

@@ -45,11 +45,11 @@ public class InputParser {
     }
 
     public Command parse(String input) throws DukeException {
-        String[] parts = input.split(" ");
         String command;
         String argument;
         CommandHandler handler;
-        if (Arrays.asList(parts).contains("between") && Arrays.asList(parts).contains("and")) {
+        boolean containsAndAfterBetween = input.matches(".*\\bbetween\\b.*\\band\\b.*");
+        if (containsAndAfterBetween) {
             argument = input.toLowerCase();
             handler = commandMap.get("DoWithInPeriod");
         } else {
@@ -79,13 +79,15 @@ public class InputParser {
     }
 
     private Command AddBTask(String argument) throws DukeException {
-        String[] eventInfo = argument.split("between|and");
-        if (eventInfo.length != 3) {
+        String[] eventInfo = argument.split(" between ");
+        String[] eventTimeInfo = eventInfo[1].split("and");
+        String[] eventInfoValidation = {eventInfo[0],eventTimeInfo[0],eventTimeInfo[1]};
+        if (eventInfoValidation.length != 3) {
             throw new DukeException("Invalid Do Within Period Task format!");
         }
         String description = eventInfo[0].trim();
-        String from = formatOutput(parseDate(eventInfo[1].trim()));
-        String to = formatOutput(parseDate(eventInfo[2].trim()));
+        String from = formatOutput(parseDate(eventTimeInfo[0].trim()));
+        String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
         return new AddTask(new DoWithInTimeTask(description, false, from, to));
     }
 

@@ -8,16 +8,18 @@ import java.io.IOException;
 
 
 public class ListTask extends Command {
+    private final String LIST_MESSAGE = "list";
+    private final String ERROR_MESSAGE_PREFIX = "Failed to save the incantation meow! : ";
     public void execute(TaskList tskList, UI ui, Storage store) {
 
-        ui.show("list");
+        ui.show(LIST_MESSAGE);
         ui.printTaskList(tskList);
 
         try {
             store.save(tskList.getAllTasks());
             ui.printNumberOfTask(tskList);
         } catch (IOException e) {
-            ui.showError("Failed to save the incantation: " + e.getMessage() + " ! Meow!");
+            ui.showError(ERROR_MESSAGE_PREFIX+ e.getMessage());
         }
 
     }

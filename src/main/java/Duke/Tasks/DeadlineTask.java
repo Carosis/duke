@@ -20,6 +20,6 @@ public class DeadlineTask extends Tasks {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "["+taskType+"]" + super.toString() + " (by: " + by + ")";
     }
 }

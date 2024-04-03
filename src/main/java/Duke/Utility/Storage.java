@@ -1,9 +1,6 @@
 package Duke.Utility;
 
-import Duke.Tasks.DeadlineTask;
-import Duke.Tasks.EventTask;
-import Duke.Tasks.Tasks;
-import Duke.Tasks.TodoTask;
+import Duke.Tasks.*;
 
 import java.io.*;
 import java.util.*;
@@ -76,6 +73,9 @@ public class Storage {
                     break;
                 case "E":
                     Result.add(new EventTask(description, isDone, from, to));
+                    break;
+                case "B":
+                    Result.add(new DoWithInTimeTask(description, isDone, from, to));
                     break;
             }
         }

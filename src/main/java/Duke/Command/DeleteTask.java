@@ -10,6 +10,8 @@ import java.io.IOException;
 public class DeleteTask extends Command {
 
     private final int taskNo;
+    private final String SUCCESS_MESSAGE = "deleted";
+    private final String ERROR_MESSAGE_PREFIX = "Failed to remove the incantation meow!: ";
 
     public DeleteTask(int index) {
         this.taskNo = index;
@@ -21,16 +23,16 @@ public class DeleteTask extends Command {
             Tasks temp = tskList.getTask(taskNo);
             tskList.deleteTask(taskNo);
             ui.printIndividualTask(temp);
-            ui.show("deleted");
+            ui.show(SUCCESS_MESSAGE);
         } catch (IndexOutOfBoundsException e) {
-            ui.showError("Failed to remove the incantation: " + e.getMessage() + " ! Meow!");
+            ui.showError(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
 
         try {
             store.save(tskList.getAllTasks());
             ui.printNumberOfTask(tskList);
         } catch (IOException e) {
-            ui.showError("Failed to remove the incantation: " + e.getMessage() + " ! Meow!");
+            ui.showError(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
 
     }

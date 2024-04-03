@@ -5,8 +5,9 @@ import Duke.Utility.UI;
 import Duke.Utility.TaskList;
 
 public class PrintBye extends Command {
+    private final String GOODBYE_MESSAGE = "goodbye";
     public void execute(TaskList tskList, UI ui, Storage store) {
-        ui.show("goodbye");
+        ui.show(GOODBYE_MESSAGE);
     }
 
     @Override

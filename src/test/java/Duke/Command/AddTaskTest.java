@@ -1,8 +1,9 @@
 package Duke.Command;
 
-import Duke.Tasks.*;
+import Duke.Tasks.Tasks;
 import Duke.Utility.DukeException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
