@@ -1,3 +1,11 @@
+/**
+ * Represents the user interface for interacting with the Duke program.
+ * Manages input/output messages and commands.
+ *
+ * @author Zijing
+ * @version 1.0
+ * @since 1.0
+ */
 package duke.utility;
 
 import duke.tasks.Tasks;
@@ -25,7 +33,9 @@ public class UI {
                     + "|____/ \\__,_|_|\\_\\___|\n";
 
     private final HashMap<String, String> messagesMap;
-
+    /**
+     * Constructs a UI object and initializes the messages map.
+     */
     public UI() {
         messagesMap = new HashMap<>();
         messagesMap.put("welcome", LineOfLine + HelloMsg + LineOfLine);
@@ -41,24 +51,43 @@ public class UI {
         messagesMap.put("update", updateMsg);
         messagesMap.put("search", searchMsg);
     }
-
+    /**
+     * Displays a message based on the provided key.
+     *
+     * @param key The key corresponding to the message to display.
+     */
     public void show(String key) {
         System.out.println(messagesMap.get(key));
     }
-
+    /**
+     * Prints a message for a task.
+     *
+     * @param toString The message to print.
+     */
     public void printTaskMsg(String toString) {
         System.out.println("  " + toString);
     }
-
+    /**
+     * Prints the task list.
+     *
+     * @param tskList The task list to print.
+     */
     public void printTaskList(TaskList tskList) {
         tskList.printTaskList(tskList.storedTaskList);
     }
-
+    /**
+     * Displays an error message.
+     *
+     * @param error The error message to display.
+     */
     public void showError(String error) {
         System.out.println(error);
     }
-
-
+    /**
+     * Reads a command from the user.
+     *
+     * @return The user's command input.
+     */
     public String readCommand() {
         Scanner scan = new Scanner(System.in);
         if (scan.hasNextLine()) {
@@ -67,11 +96,19 @@ public class UI {
             return "goodbye";
         }
     }
-
+    /**
+     * Prints the number of tasks in the task list.
+     *
+     * @param tskList The task list containing the tasks.
+     */
     public void printNumberOfTask(TaskList tskList) {
         System.out.println("Now you have " + tskList.storedTaskList.size() + " tasks in the Magic Book! Meow!");
     }
-
+    /**
+     * Prints an individual task.
+     *
+     * @param tsk The task to print.
+     */
     public void printIndividualTask(Tasks tsk) {
         System.out.println(tsk.toString());
     }

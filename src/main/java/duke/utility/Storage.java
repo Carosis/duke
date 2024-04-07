@@ -1,24 +1,43 @@
+/**
+ * Handles the storage to and from a file.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since 1.0
+ */
 package duke.utility;
 
 import duke.tasks.*;
 
 import java.io.*;
 import java.util.*;
-
-
+/**
+ * Handles the storage and retrieval of tasks to and from a file.
+ */
 public class Storage {
-    protected String FilePath = "src/main/java/duke.txt";
-    protected ArrayList<Tasks> TasksBuffer = new ArrayList<>();
-    protected ArrayList<String> fileContent = new ArrayList<>();
-    UI newUI = new UI();
-
+    protected String FilePath = "src/main/java/duke.txt";// Default file path for storing tasks
+    protected ArrayList<Tasks> TasksBuffer = new ArrayList<>();// Buffer to hold tasks read from the file
+    protected ArrayList<String> fileContent = new ArrayList<>(); // Buffer to hold file content
+    UI newUI = new UI();// Instance of UI for displaying messages
+    /**
+     * Default constructor for Storage.
+     */
     public Storage() {
     }
-
+    /**
+     * Constructor for Storage with a specified file path.
+     *
+     * @param FilePath The file path for storing tasks.
+     */
     public Storage(String FilePath) {
         this.FilePath = FilePath;
     }
-
+    /**
+     * Loads tasks from the file and returns them as an ArrayList.
+     *
+     * @return ArrayList of Tasks loaded from the file.
+     * @throws DukeException If there's an error while loading tasks.
+     */
     public ArrayList<Tasks> load() throws DukeException {
         File file = new File(FilePath);
         this.TasksBuffer = new ArrayList<>();
@@ -36,7 +55,14 @@ public class Storage {
         TasksBuffer = convertFileToTasks();
         return TasksBuffer;
     }
-
+    /**
+     * Extracts text between two specified strings.
+     *
+     * @param text  The text to extract from.
+     * @param start The starting string.
+     * @param end   The ending string.
+     * @return The extracted text between start and end strings.
+     */
     private String extractBetween(String text, String start, String end) {
         if (text.contains(start) && text.contains(end)) {
             int startIndex = text.indexOf(start) + start.length();
@@ -45,6 +71,15 @@ public class Storage {
         }
         return "";
     }
+
+    /**
+     * Extracts text from a specified starting string to the end of the text.
+     *
+     * @param text  The text to extract from.
+     * @param start The starting string.
+     * @param end   The ending string.
+     * @return The extracted text from start to the end of the text.
+     */
     private String extractEnding(String text, String start, String end) {
         if (text.contains(start) && text.contains(end)) {
             int startIndex = text.indexOf(start) + start.length();
@@ -53,7 +88,11 @@ public class Storage {
         }
         return "";
     }
-
+    /**
+     * Converts file content to Task objects.
+     *
+     * @return ArrayList of Task objects converted from file content.
+     */
     public ArrayList<Tasks> convertFileToTasks() {
         ArrayList<Tasks> Result = new ArrayList<>();
         for (String s : fileContent) {
@@ -81,6 +120,12 @@ public class Storage {
         }
         return Result;
     }
+    /**
+     * Saves tasks to the file.
+     *
+     * @param tasks ArrayList of tasks to be saved to the file.
+     * @throws IOException If there's an error while saving tasks to the file.
+     */
 
     public void save(ArrayList<Tasks> tasks) throws IOException {
         try {

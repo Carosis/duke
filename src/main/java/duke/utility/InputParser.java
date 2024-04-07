@@ -1,3 +1,11 @@
+/**
+ * The InputParser class handles parsing user input and converting it into executable commands.
+
+ * @author [Your Name]
+ * @version 1.0
+ * @since 1.0
+ */
+
 package duke.utility;
 
 import duke.command.AddTaskFunction;
@@ -24,10 +32,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
-
+/**
+ * Parses user input and generates corresponding commands for the Duke application.
+ * Supports various commands such as adding tasks, updating tasks, marking tasks as done, and more.
+ */
 public class InputParser {
     private final Map<String, CommandHandler> commandMap;
-
+    /**
+     * Initializes the command map with supported commands and their corresponding handlers.
+     */
     public InputParser() {
         commandMap = new HashMap<>();
         commandMap.put("bye", this::printBye);
@@ -43,14 +56,27 @@ public class InputParser {
         commandMap.put("snooze", this::snoozeTask);
         commandMap.put("find", this::searchTask);
     }
-
+    /**
+     * Parses the user input and returns the corresponding command.
+     *
+     * @param input The user input to be parsed.
+     * @return The generated command based on the input.
+     * @throws DukeException If the input is invalid or unsupported.
+     */
     public Command parse(String input) throws DukeException {
         String command;
         String argument;
         CommandHandler handler;
+
         String[] actualParts = input.split(" ", 2);
+
+        // Checking if the input contains 'between' followed by 'and' to handle 'DoWithInPeriod' command
         boolean containsAndAfterBetween = input.matches(".*\\bbetween\\b.*\\band\\b.*");
+
+        // Checking if the command is supported based on the first part of the input
         boolean handlerMatched = commandMap.containsKey(actualParts[0].toLowerCase());
+
+        // Handling 'DoWithInPeriod' command if the input contains 'between' followed by 'and'
         if (containsAndAfterBetween && !handlerMatched) {
             argument = input.toLowerCase();
             handler = commandMap.get("DoWithInPeriod");
@@ -66,11 +92,20 @@ public class InputParser {
             throw new DukeException("Meow? Unknown command!");
         }
     }
-
+    /**
+     * Functional interface for command handlers.
+     */
     public interface CommandHandler {
         Command handle(String argument) throws DukeException;
     }
 
+    /**
+     * Handles the addition of a TodoTask based on the input argument.
+     *
+     * @param argument The argument containing the description of the task.
+     * @return The AddTaskFunction command to add the TodoTask.
+     * @throws DukeException If the description of the todo task is empty.
+     */
     private Command AddTTask(String argument) throws DukeException {
         try {
             return new AddTaskFunction(new TodoTask(argument, false));
@@ -78,17 +113,28 @@ public class InputParser {
             throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
-
+    /**
+     * Handles the addition of a DoWithInTimeTask based on the input argument.
+     *
+     * @param argument The argument containing the details of the task.
+     * @return The AddTaskFunction command to add the DoWithInTimeTask.
+     * @throws DukeException If the input format for DoWithInTimeTask is invalid.
+     */
     private Command AddBTask(String argument) throws DukeException {
         String[] eventInfo = argument.split(" between ");
         String[] eventTimeInfo = eventInfo[1].split("and");
-        String[] eventInfoValidation = {eventInfo[0], eventTimeInfo[0], eventTimeInfo[1]};
         String description = eventInfo[0].trim();
         String from = formatOutput(parseDate(eventTimeInfo[0].trim()));
         String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
         return new AddTaskFunction(new DoWithInTimeTask(description, false, from, to));
     }
-
+    /**
+     * Handles the addition of a DeadlineTask based on the input argument.
+     *
+     * @param argument The argument containing the description and deadline of the task.
+     * @return The AddTaskFunction command to add the DeadlineTask.
+     * @throws DukeException If the input format for DeadlineTask is invalid.
+     */
     private Command AddDTask(String argument) throws DukeException {
         String[] parts = argument.split("/by");
         String deadlineInfo = parts[0].trim();
@@ -98,7 +144,13 @@ public class InputParser {
         }
         return new AddTaskFunction(new DeadlineTask(deadlineInfo, false, by));
     }
-
+    /**
+     * Handles the addition of an EventTask based on the input argument.
+     *
+     * @param argument The argument containing the details of the event task.
+     * @return The AddTaskFunction command to add the EventTask.
+     * @throws DukeException If the input format for EventTask is invalid.
+     */
     private Command AddETask(String argument) throws DukeException {
         String[] eventInfo = argument.split("/from|/to");
         if (eventInfo.length != 3) {
@@ -109,7 +161,13 @@ public class InputParser {
         String to = formatOutput(parseDate(eventInfo[2].trim()));
         return new AddTaskFunction(new EventTask(description, false, from, to));
     }
-
+    /**
+     * Handles the updating of a task based on the input argument.
+     *
+     * @param argument The argument containing the details of the task update.
+     * @return The UpdateTaskFunction command to update the task.
+     * @throws DukeException If the input format for task update is invalid.
+     */
     private Command updateTask(String argument) throws DukeException {
         String[] parts = argument.split(" ");
         String[] updateInfo = argument.split("\\b(?:from | to |by |description |between |and )\\b");
@@ -140,7 +198,13 @@ public class InputParser {
         }
         return transferInfo;
     }
-
+    /**
+     * Handles the snoozing of a task based on the input argument.
+     *
+     * @param argument The argument containing the details of the task snooze.
+     * @return The SnoozeTaskFunction command to snooze the task.
+     * @throws DukeException If the input format for task snooze is invalid.
+     */
     private Command snoozeTask(String argument) throws DukeException {
 
         String[] snoozeInfo = argument.split("\\b(?: for )\\b");
@@ -155,7 +219,13 @@ public class InputParser {
             throw new DukeException(" Meow!!! The Snooze format incorrect meow.");
         }
     }
-
+    /**
+     * Handles the deletion of a task based on the input argument.
+     *
+     * @param argument The argument containing the index of the task to delete.
+     * @return The DeleteTaskFunction command to delete the task.
+     * @throws DukeException If the input format for task deletion is invalid.
+     */
     private Command deleteATask(String argument) throws DukeException {
         try {
             int index = Integer.parseInt(argument);
@@ -164,15 +234,31 @@ public class InputParser {
             throw new DukeException(" Meow!!! The delete must come with int meow.");
         }
     }
-
+    /**
+     * Handles the printing of the goodbye message.
+     *
+     * @param argument Unused argument for the goodbye command.
+     * @return The PrintByeFunction command to print the goodbye message.
+     */
     private Command printBye(String argument) {
         return new PrintByeFunction();
     }
-
+    /**
+     * Handles the listing of tasks.
+     *
+     * @param argument Unused argument for the list command.
+     * @return The ListTaskFunction command to list tasks.
+     */
     private Command listTask(String argument) {
         return new ListTaskFunction();
     }
-
+    /**
+     * Handles the marking of a task as done.
+     *
+     * @param argument The argument containing the index of the task to mark as done.
+     * @return The MarkTaskFunction command to mark the task as done.
+     * @throws DukeException If the input format for task marking is invalid.
+     */
     private Command markTask(String argument) throws DukeException {
         String[] markInfo = {"mark", argument};
         try {
@@ -181,7 +267,13 @@ public class InputParser {
             throw new DukeException(" Meow!!! The mark must come with int meow.");
         }
     }
-
+    /**
+     * Handles the unmarking of a task as not done.
+     *
+     * @param argument The argument containing the index of the task to unmark as not done.
+     * @return The MarkTaskFunction command to unmark the task as not done.
+     * @throws DukeException If the input format for task unmarking is invalid.
+     */
     private Command unmarkTask(String argument) throws DukeException {
         String[] unmarkInfo = {"unmark", argument};
         try {
@@ -190,7 +282,13 @@ public class InputParser {
             throw new DukeException(" Meow!!! The find must come with keywords meow.");
         }
     }
-
+    /**
+     * Handles the searching of tasks based on keywords.
+     *
+     * @param argument The argument containing the keywords for task search.
+     * @return The FindTaskFunction command to search for tasks.
+     * @throws DukeException If the input format for task searching is invalid.
+     */
     private Command searchTask(String argument) throws DukeException {
         try {
             return new FindTaskFunction(argument);
@@ -198,7 +296,13 @@ public class InputParser {
             throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
-
+    /**
+     * Parses the date-time from the input argument and returns the LocalDateTime object.
+     *
+     * @param argument The argument containing the date-time information.
+     * @return The LocalDateTime object parsed from the input.
+     * @throws DukeException If the input date-time format is invalid.
+     */
     public LocalDateTime parseDate(String argument) throws DukeException {
         argument = argument.toLowerCase();
 
@@ -227,12 +331,22 @@ public class InputParser {
             }
         }
     }
-
+    /**
+     * Formats the output date-time from TemporalAccessor to a specified format.
+     *
+     * @param temporalAccessor The TemporalAccessor object representing date-time.
+     * @return The formatted date-time string.
+     */
     public String formatOutput(TemporalAccessor temporalAccessor) {
         return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm").format(temporalAccessor);
     }
 
-
+    /**
+     * Checks if the input string represents a valid day of the week.
+     *
+     * @param input The input string to check.
+     * @return True if the input is a valid day of the week, false otherwise.
+     */
     private boolean isValidDayOfWeek(String input) {
         try {
             DayOfWeek.valueOf(input.toUpperCase());

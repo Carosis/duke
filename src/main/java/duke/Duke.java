@@ -1,3 +1,12 @@
+/**
+ * Represents the main class for the Duke program.
+ * Manages the initialization of Duke and runs the program.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since 1.0
+ */
+
 package duke;
 
 import duke.command.Command;
@@ -18,6 +27,11 @@ public class Duke extends Tasks {
     private final String FILE_ERROR_MESSAGE = "fileError";
     private final String WELCOME_MESSAGE = "welcome";
     private final String LINE_SEPARATOR = "line";
+    /**
+     * Constructs a Duke object with the specified file path.
+     *
+     * @param filePath The file path for storing tasks.
+     */
     public Duke(String filePath) {
 
         ui = new UI();
@@ -32,7 +46,9 @@ public class Duke extends Tasks {
             taskList = new TaskList();
         }
     }
-
+    /**
+     * Runs the Duke program, displaying welcome messages and handling user commands.
+     */
     public void run() {
         ui.show(WELCOME_MESSAGE);
         boolean isExit = false;
@@ -52,7 +68,12 @@ public class Duke extends Tasks {
         }
 
     }
-
+    /**
+     * The main method to start the Duke program.
+     *
+     * @param args Command-line arguments (not used in this context).
+     * @throws DukeException If there are issues with Duke's initialization or running.
+     */
     public static void main(String[] args) throws DukeException {
         new Duke("src/main/java/duke.txt").run();
     }
