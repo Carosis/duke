@@ -102,7 +102,6 @@ public class UpdateTaskFunction extends Command {
         try {
             EventTask temp = (DoWithInTimeTask) task;
             String tempStart = inputParser.formatOutput(inputParser.parseDate(userInputs[2].trim()));
-            System.out.println(userInputs[2]);
             temp.setFrom(tempStart);
             if (userInputs.length >= 4) {
                 String tempEnd = inputParser.formatOutput(inputParser.parseDate(userInputs[3].trim()));

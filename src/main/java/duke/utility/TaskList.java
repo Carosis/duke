@@ -28,7 +28,9 @@ public class TaskList extends Tasks {
     public void deleteTask(int index) {
         storedTaskList.remove(index - 1);
     }
-
+    public int getTaskAmount(ArrayList<Tasks> taskList) {
+        return taskList.size();
+    }
     public ArrayList<Tasks> getAllTasks() {
         return storedTaskList;
     }

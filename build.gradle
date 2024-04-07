@@ -15,15 +15,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
-
 }
 
 application {
-    mainClass.set("Duke.Duke")
+    mainClass.set("duke.Duke")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "Duke"
     archiveClassifier = null
     dependsOn("distZip", "distTar")
 }

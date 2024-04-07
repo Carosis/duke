@@ -90,7 +90,7 @@ public class SnoozeTaskFunction extends Command {
             case "B":
                 if (tsk instanceof DoWithInTimeTask) {
                     DoWithInTimeTask tempB = (DoWithInTimeTask) tsk;
-                    return new String[]{"between", tempB.getTaskAnd()};
+                    return new String[]{"between", tempB.getTo()};
                 }
                 break;
         }

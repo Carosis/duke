@@ -11,22 +11,6 @@ public class DoWithInTimeTask extends EventTask {
         this.taskType = TaskType.B.toString();
     }
 
-    public String getTaskBetween() {
-        return taskBetween;
-    }
-
-    public String getTaskAnd() {
-        return taskAnd;
-    }
-
-    public void setTaskBetween(String taskBetween) {
-        this.taskBetween = taskBetween;
-    }
-
-    public void setTaskAnd(String taskAnd) {
-        this.taskAnd = taskAnd;
-    }
-
     @Override
     public String toString() {
         return super.toString();
