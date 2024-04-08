@@ -27,10 +27,10 @@ public class UI {
     private static final String searchMsg = "YumiKunKun found the magic file meow!";
     private static final String Logo =
             " ____        _        \n"
-                    + "|  _ \\ _   _| | _____ \n"
-                    + "| | | | | | | |/ / _ \\\n"
-                    + "| |_| | |_| |   <  __/\n"
-                    + "|____/ \\__,_|_|\\_\\___|\n";
+                    + "|  _ \\ _   _| | _____    /\\\\_/\\\\\n"
+                    + "| | | | | | | |/ / _ \\   ( o.o )\n"
+                    + "| |_| | |_| |   <  __/    > ^ <\n"
+                    + "|____/ \\__,_|_|\\_\\___|  KunKunMeow~\n";
 
     private final HashMap<String, String> messagesMap;
     /**

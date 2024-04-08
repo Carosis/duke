@@ -1,6 +1,6 @@
 /**
  * The InputParser class handles parsing user input and converting it into executable commands.
-
+ *
  * @author [Your Name]
  * @version 1.0
  * @since 1.0
@@ -17,10 +17,11 @@ import duke.command.PrintByeFunction;
 import duke.command.ListTaskFunction;
 import duke.command.MarkTaskFunction;
 import duke.command.FindTaskFunction;
+import duke.tasks.Tasks;
+import duke.tasks.TodoTask;
 import duke.tasks.DeadlineTask;
 import duke.tasks.DoWithInTimeTask;
 import duke.tasks.EventTask;
-import duke.tasks.TodoTask;
 
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
@@ -32,12 +33,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+
 /**
  * Parses user input and generates corresponding commands for the Duke application.
  * Supports various commands such as adding tasks, updating tasks, marking tasks as done, and more.
  */
 public class InputParser {
     private final Map<String, CommandHandler> commandMap;
+
     /**
      * Initializes the command map with supported commands and their corresponding handlers.
      */
@@ -56,6 +59,7 @@ public class InputParser {
         commandMap.put("snooze", this::snoozeTask);
         commandMap.put("find", this::searchTask);
     }
+
     /**
      * Parses the user input and returns the corresponding command.
      *
@@ -92,6 +96,7 @@ public class InputParser {
             throw new DukeException("Meow? Unknown command!");
         }
     }
+
     /**
      * Functional interface for command handlers.
      */
@@ -113,6 +118,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
+
     /**
      * Handles the addition of a DoWithInTimeTask based on the input argument.
      *
@@ -128,6 +134,7 @@ public class InputParser {
         String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
         return new AddTaskFunction(new DoWithInTimeTask(description, false, from, to));
     }
+
     /**
      * Handles the addition of a DeadlineTask based on the input argument.
      *
@@ -144,6 +151,7 @@ public class InputParser {
         }
         return new AddTaskFunction(new DeadlineTask(deadlineInfo, false, by));
     }
+
     /**
      * Handles the addition of an EventTask based on the input argument.
      *
@@ -161,6 +169,7 @@ public class InputParser {
         String to = formatOutput(parseDate(eventInfo[2].trim()));
         return new AddTaskFunction(new EventTask(description, false, from, to));
     }
+
     /**
      * Handles the updating of a task based on the input argument.
      *
@@ -198,6 +207,7 @@ public class InputParser {
         }
         return transferInfo;
     }
+
     /**
      * Handles the snoozing of a task based on the input argument.
      *
@@ -219,6 +229,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The Snooze format incorrect meow.");
         }
     }
+
     /**
      * Handles the deletion of a task based on the input argument.
      *
@@ -234,6 +245,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The delete must come with int meow.");
         }
     }
+
     /**
      * Handles the printing of the goodbye message.
      *
@@ -243,15 +255,25 @@ public class InputParser {
     private Command printBye(String argument) {
         return new PrintByeFunction();
     }
+
     /**
      * Handles the listing of tasks.
      *
      * @param argument Unused argument for the list command.
      * @return The ListTaskFunction command to list tasks.
      */
-    private Command listTask(String argument) {
-        return new ListTaskFunction();
+    private Command listTask(String argument) throws DukeException {
+        try {
+            if (argument.isEmpty()) {
+                return new ListTaskFunction();
+            } else {
+                return new ListTaskFunction(Integer.parseInt(argument));
+            }
+        } catch (NumberFormatException e) {
+            throw new DukeException("Must input index meow!");
+        }
     }
+
     /**
      * Handles the marking of a task as done.
      *
@@ -267,6 +289,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The mark must come with int meow.");
         }
     }
+
     /**
      * Handles the unmarking of a task as not done.
      *
@@ -282,6 +305,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The find must come with keywords meow.");
         }
     }
+
     /**
      * Handles the searching of tasks based on keywords.
      *
@@ -296,6 +320,7 @@ public class InputParser {
             throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
+
     /**
      * Parses the date-time from the input argument and returns the LocalDateTime object.
      *
@@ -331,6 +356,7 @@ public class InputParser {
             }
         }
     }
+
     /**
      * Formats the output date-time from TemporalAccessor to a specified format.
      *

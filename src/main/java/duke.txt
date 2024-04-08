@@ -7,3 +7,7 @@
 [E][ ] aaaa (From: 27-03-2024 18:00) (To: 02-04-2024 17:28)
 [B][ ] clear table and desk (From: 03-04-2024 20:36) (To: 06-04-2024 00:00)
 [T][ ] aaaaaaaaa
+[D][ ] get fish for dinner (by: 08-04-2024 00:00)
+[E][ ] fish festival (From: 08-04-2024 20:12) (To: 09-04-2024 20:12)
+[T][ ] join the festival
+[B][ ] become the winner (From: 08-04-2024 20:13) (To: 09-04-2024 20:13)

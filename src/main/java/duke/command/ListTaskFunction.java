@@ -23,6 +23,15 @@ import java.io.IOException;
 public class ListTaskFunction extends Command {
     private final String LIST_MESSAGE = "list";
     private final String ERROR_MESSAGE_PREFIX = "Failed to save the incantation meow! : ";
+    private final int taskIndex; // Index of the task to list, -1 if listing all tasks
+
+    public ListTaskFunction() {
+        this.taskIndex = -1; // Default to listing all tasks
+    }
+
+    public ListTaskFunction(int taskIndex) {
+        this.taskIndex = taskIndex;
+    }
     /**
      * Executes the list task command.
      *
@@ -31,17 +40,26 @@ public class ListTaskFunction extends Command {
      * @param store    The storage component for saving task data.
      */
     public void execute(TaskList tskList, UI ui, Storage store) {
-
-        ui.show(LIST_MESSAGE);
-        ui.printTaskList(tskList);
+        if (taskIndex == -1) {
+            // List all tasks
+            ui.show(LIST_MESSAGE);
+            ui.printTaskList(tskList);
+        } else {
+            // List specific task
+            try {
+                ui.show(LIST_MESSAGE);
+                ui.printIndividualTask(tskList.getTask(taskIndex));
+            } catch (IndexOutOfBoundsException e) {
+                ui.showError("Task not found!");
+            }
+        }
 
         try {
             store.save(tskList.getAllTasks());
             ui.printNumberOfTask(tskList);
         } catch (IOException e) {
-            ui.showError(ERROR_MESSAGE_PREFIX+ e.getMessage());
+            ui.showError(ERROR_MESSAGE_PREFIX + e.getMessage());
         }
-
     }
 
     /**
