@@ -68,6 +68,9 @@ public class InputParser {
      * @throws DukeException If the input is invalid or unsupported.
      */
     public Command parse(String input) throws DukeException {
+
+        assert input != null : "Input cannot be meoll.";
+
         String command;
         String argument;
         CommandHandler handler;
@@ -127,9 +130,18 @@ public class InputParser {
      * @throws DukeException If the input format for DoWithInTimeTask is invalid.
      */
     private Command AddBTask(String argument) throws DukeException {
-        String[] eventInfo = argument.split(" between ");
-        String[] eventTimeInfo = eventInfo[1].split("and");
-        String description = eventInfo[0].trim();
+        int lastBetweenIndex = argument.lastIndexOf(" between ");
+        if (lastBetweenIndex == -1) {
+            throw new DukeException("Invalid argument format for between task.");
+        }
+
+        String description = argument.substring(0, lastBetweenIndex).trim();
+        String timeInfo = argument.substring(lastBetweenIndex + " between ".length()).trim();
+        String[] eventTimeInfo = timeInfo.split(" and ");
+        if (eventTimeInfo.length != 2) {
+            throw new DukeException("Invalid time format for between task.");
+        }
+
         String from = formatOutput(parseDate(eventTimeInfo[0].trim()));
         String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
         return new AddTaskFunction(new DoWithInTimeTask(description, false, from, to));

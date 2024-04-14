@@ -26,6 +26,9 @@ public class TaskList extends Tasks {
      * @throws DukeException If there is an issue with the loaded tasks.
      */
     public TaskList(ArrayList<Tasks> loadedTasks) throws DukeException {
+
+        assert loadedTasks != null : "Loaded tasks list cannot be meoll";
+
         File f = new File(FilePath);
         this.storedTaskList = loadedTasks;
     }
@@ -40,6 +43,9 @@ public class TaskList extends Tasks {
      * @param taskToAdd The task to add.
      */
     public void addTask(Tasks taskToAdd) {
+
+        assert taskToAdd != null : "Task to add cannot be meoll";
+
         storedTaskList.add(taskToAdd);
     }
     /**

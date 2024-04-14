@@ -11,27 +11,42 @@ import duke.tasks.*;
 
 import java.io.*;
 import java.util.*;
+
 /**
  * Handles the storage and retrieval of tasks to and from a file.
  */
 public class Storage {
-    protected String FilePath = "src/main/java/duke.txt";// Default file path for storing tasks
+    protected String FilePath;// Default file path for storing tasks
+    protected String FileName = "duke.txt";// Default file path for storing tasks
     protected ArrayList<Tasks> TasksBuffer = new ArrayList<>();// Buffer to hold tasks read from the file
     protected ArrayList<String> fileContent = new ArrayList<>(); // Buffer to hold file content
     UI newUI = new UI();// Instance of UI for displaying messages
+
     /**
      * Default constructor for Storage.
      */
     public Storage() {
+        // Get the current working directory
+        String workingDir = System.getProperty("user.dir");
+
+        // Construct the file path by appending the file name to the working directory
+        FilePath = workingDir + File.separator + FileName;
     }
+
     /**
      * Constructor for Storage with a specified file path.
      *
      * @param FilePath The file path for storing tasks.
      */
     public Storage(String FilePath) {
+        assert FilePath != null : "FilePath cannot be meoll";
+
         this.FilePath = FilePath;
     }
+    public String getFilePath() {
+        return FilePath;
+    }
+
     /**
      * Loads tasks from the file and returns them as an ArrayList.
      *
@@ -39,7 +54,11 @@ public class Storage {
      * @throws DukeException If there's an error while loading tasks.
      */
     public ArrayList<Tasks> load() throws DukeException {
+
         File file = new File(FilePath);
+
+        assert file.exists() : "File does not meist: " + FilePath;
+
         this.TasksBuffer = new ArrayList<>();
 
         try {
@@ -55,6 +74,7 @@ public class Storage {
         TasksBuffer = convertFileToTasks();
         return TasksBuffer;
     }
+
     /**
      * Extracts text between two specified strings.
      *
@@ -88,6 +108,7 @@ public class Storage {
         }
         return "";
     }
+
     /**
      * Converts file content to Task objects.
      *
@@ -120,6 +141,7 @@ public class Storage {
         }
         return Result;
     }
+
     /**
      * Saves tasks to the file.
      *
@@ -131,6 +153,8 @@ public class Storage {
         try {
             File file = new File(FilePath);
             FileWriter FW = new FileWriter(file);
+
+            assert tasks != null : "Tasks list cannot be meoll";
 
             for (Tasks t : tasks) {
                 FW.write(t.toString());

@@ -33,6 +33,7 @@ public class Duke extends Tasks {
      * @param filePath The file path for storing tasks.
      */
     public Duke(String filePath) {
+        assert filePath != null && !filePath.trim().isEmpty() : "File path cannot be meoll.";
 
         ui = new UI();
         storage = new Storage(filePath);
@@ -50,6 +51,8 @@ public class Duke extends Tasks {
      * Runs the Duke program, displaying welcome messages and handling user commands.
      */
     public void run() {
+        assert taskList != null : "Must have task list meow!";
+
         ui.show(WELCOME_MESSAGE);
         boolean isExit = false;
 
@@ -74,7 +77,9 @@ public class Duke extends Tasks {
      * @param args Command-line arguments (not used in this context).
      * @throws DukeException If there are issues with Duke's initialization or running.
      */
-    public static void main(String[] args) throws DukeException {
-        new Duke("src/main/java/duke.txt").run();
+    public static void main(String[] args)  {
+        Storage storage = new Storage(); // Create an instance of Storage to access the file path
+        String filePath = storage.getFilePath(); // Access the FilePath property from Storage
+        new Duke(filePath).run(); // Initialize Duke with the file path and run it
     }
 }
