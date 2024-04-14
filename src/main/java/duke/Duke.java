@@ -27,6 +27,10 @@ public class Duke extends Tasks {
     private final String FILE_ERROR_MESSAGE = "fileError";
     private final String WELCOME_MESSAGE = "welcome";
     private final String LINE_SEPARATOR = "line";
+
+    private final String USERGUIDE_MESSAGE = "userguide";
+
+
     /**
      * Constructs a Duke object with the specified file path.
      *
@@ -54,6 +58,7 @@ public class Duke extends Tasks {
         assert taskList != null : "Must have task list meow!";
 
         ui.show(WELCOME_MESSAGE);
+        ui.show(USERGUIDE_MESSAGE);
         boolean isExit = false;
 
         while (!isExit) {

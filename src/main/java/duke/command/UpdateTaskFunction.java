@@ -29,6 +29,7 @@ public class UpdateTaskFunction extends Command {
     private final InputParser inputParser = new InputParser();
     private final String UPDATE_MESSAGE = "update";
     private final String INVALID_INPUT_MESSAGE = "Invalid input meow!";
+
     /**
      * Constructs an UpdateTaskFunction command with the specified user inputs.
      *
@@ -37,39 +38,44 @@ public class UpdateTaskFunction extends Command {
     public UpdateTaskFunction(String[] userInput) {
         this.userInputs = userInput;
     }
+
     /**
      * Executes the update task command.
      *
      * @param tskList The task list containing the task to be updated.
-     * @param ui       The user interface for displaying messages.
-     * @param store  The storage component for saving task data.
+     * @param ui      The user interface for displaying messages.
+     * @param store   The storage component for saving task data.
      */
-    public void execute(TaskList tskList, UI ui, Storage store) {
-
-        Tasks tsk = tskList.storedTaskList.get(Integer.parseInt(userInputs[0]) - 1);
-        String LINE_SEPARATOR = "line";
-        switch (userInputs[1]) {
-            case "description":
-                updateDescription(tsk, ui);
-                break;
-            case "from":
-                updateEventFrom(tsk, ui);
-                break;
-            case "to":
-                updateEventTo(tsk, ui);
-                break;
-            case "by":
-                updateDeadlineBy(tsk, ui);
-                break;
-            case "between":
-                updateEDoWithInTimeBetween(tsk, ui);
-                break;
-            default:
-                System.err.println(INVALID_INPUT_MESSAGE);
-                ui.show(LINE_SEPARATOR);
+    public void execute(TaskList tskList, UI ui, Storage store) throws DukeException {
+        try {
+            Tasks tsk = tskList.storedTaskList.get(Integer.parseInt(userInputs[0]) - 1);
+            String LINE_SEPARATOR = "line";
+            switch (userInputs[1]) {
+                case "description":
+                    updateDescription(tsk, ui);
+                    break;
+                case "from":
+                    updateEventFrom(tsk, ui);
+                    break;
+                case "to":
+                    updateEventTo(tsk, ui);
+                    break;
+                case "by":
+                    updateDeadlineBy(tsk, ui);
+                    break;
+                case "between":
+                    updateEDoWithInTimeBetween(tsk, ui);
+                    break;
+                default:
+                    System.err.println(INVALID_INPUT_MESSAGE);
+                    ui.show(LINE_SEPARATOR);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
 
     }
+
     /**
      * Updates the description of the specified task.
      *
@@ -86,13 +92,14 @@ public class UpdateTaskFunction extends Command {
             System.err.println(INVALID_DESCRIPTION_MESSAGE);
         }
     }
+
     /**
      * Updates the start time of an event task.
      *
      * @param task The event task to update.
      * @param ui   The user interface for displaying messages.
      */
-    private void updateEventFrom(Tasks task, UI ui){
+    private void updateEventFrom(Tasks task, UI ui) {
         try {
             EventTask eventTask = (EventTask) task;
             String tempFrom = inputParser.formatOutput(inputParser.parseDate(userInputs[2]));
@@ -108,13 +115,14 @@ public class UpdateTaskFunction extends Command {
             System.err.println(INVALID_UPDATE_EVENT_FROM_MESSAGE);
         }
     }
+
     /**
      * Updates the end time of an event task.
      *
      * @param task The event task to update.
      * @param ui   The user interface for displaying messages.
      */
-    private void updateEventTo(Tasks task, UI ui){
+    private void updateEventTo(Tasks task, UI ui) {
         try {
             EventTask temp = (EventTask) task;
             String tempTo = inputParser.formatOutput(inputParser.parseDate(userInputs[2].trim()));
@@ -126,13 +134,14 @@ public class UpdateTaskFunction extends Command {
             System.err.println(INVALID_UPDATE_EVENT_TO_MESSAGE);
         }
     }
+
     /**
      * Updates the deadline of a task.
      *
      * @param task The deadline task to update.
      * @param ui   The user interface for displaying messages.
      */
-    private void updateDeadlineBy(Tasks task, UI ui){
+    private void updateDeadlineBy(Tasks task, UI ui) {
         try {
             DeadlineTask deadlineTask = (DeadlineTask) task;
             String tempBy = inputParser.formatOutput(inputParser.parseDate(userInputs[2].trim()));
@@ -144,13 +153,14 @@ public class UpdateTaskFunction extends Command {
             System.err.println(INVALID_UPDATE_DEADLINE_BY_MESSAGE);
         }
     }
+
     /**
      * Updates the period of a task.
      *
      * @param task The deadline task to update.
      * @param ui   The user interface for displaying messages.
      */
-    private void updateEDoWithInTimeBetween(Tasks task, UI ui){
+    private void updateEDoWithInTimeBetween(Tasks task, UI ui) {
 
         try {
             EventTask temp = (DoWithInTimeTask) task;
@@ -162,11 +172,12 @@ public class UpdateTaskFunction extends Command {
             }
             ui.show(UPDATE_MESSAGE);
             ui.printTaskMsg(task.toString());
-        }catch (ClassCastException | DukeException e) {
+        } catch (ClassCastException | DukeException e) {
             String INVALID_UPDATE_BETWEEN_MESSAGE = "Invalid update between meow!";
             System.err.println(INVALID_UPDATE_BETWEEN_MESSAGE);
         }
     }
+
     /**
      * Checks if this command is an exit command.
      *

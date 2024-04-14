@@ -32,6 +32,24 @@ public class UI {
                     + "| |_| | |_| |   <  __/    > ^ <\n"
                     + "|____/ \\__,_|_|\\_\\___|  KunKunMeow~\n";
 
+    private static final String userguideMsg =
+            " Simple user guide meow:\n"
+                    + "list : list all tasks\n"
+                    + "list {taskID} : list a single tasks\n"
+                    + "todo {description} : add todo tasks\n"
+                    + "Date format DD-MM-YYYY (HH:MM) \n"
+                    + "deadline {description} /by {dateline}: add deadline tasks\n"
+                    + "event {description} /from {dateline} /to {dateline} : add event tasks\n"
+                    + "{description} between {dateline} and {dateline} : add DoWithInPeriod tasks\n"
+                    + "delete {taskID} : remove a task from list\n"
+                    + "update {taskID} : \n"
+                    + " from {dateline} (Optional: to {dateline}): update event task dateline \n"
+                    + " between {dateline} (Optional: and {dateline}): update event task dateline \n"
+                    + " by {dateline} : update deadline task deadline \n"
+                    + " description {description} : update task details \n"
+                    + "snooze {taskID} for {number} {units (days/minutes/etc)} : snooze a task for a period\n"
+                    + "bye : You can try it meow~ \n";
+
     private final HashMap<String, String> messagesMap;
     /**
      * Constructs a UI object and initializes the messages map.
@@ -50,6 +68,7 @@ public class UI {
         messagesMap.put("logo", "Hello from\n" + Logo);
         messagesMap.put("update", updateMsg);
         messagesMap.put("search", searchMsg);
+        messagesMap.put("userguide", userguideMsg);
     }
     /**
      * Displays a message based on the provided key.

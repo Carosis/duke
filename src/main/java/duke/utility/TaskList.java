@@ -82,7 +82,6 @@ public class TaskList extends Tasks {
     public ArrayList<Tasks> getAllTasks() {
         return storedTaskList;
     }
-
     /**
      * Prints the task list.
      *

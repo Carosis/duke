@@ -130,21 +130,26 @@ public class InputParser {
      * @throws DukeException If the input format for DoWithInTimeTask is invalid.
      */
     private Command AddBTask(String argument) throws DukeException {
-        int lastBetweenIndex = argument.lastIndexOf(" between ");
-        if (lastBetweenIndex == -1) {
-            throw new DukeException("Invalid argument format for between task.");
-        }
+        try {
+            int lastBetweenIndex = argument.lastIndexOf(" between ");
+            if (lastBetweenIndex == -1) {
+                throw new DukeException("Invalid argument format for between task.");
+            }
 
-        String description = argument.substring(0, lastBetweenIndex).trim();
-        String timeInfo = argument.substring(lastBetweenIndex + " between ".length()).trim();
-        String[] eventTimeInfo = timeInfo.split(" and ");
-        if (eventTimeInfo.length != 2) {
-            throw new DukeException("Invalid time format for between task.");
-        }
+            String description = argument.substring(0, lastBetweenIndex).trim();
+            String timeInfo = argument.substring(lastBetweenIndex + " between ".length()).trim();
+            String[] eventTimeInfo = timeInfo.split(" and ");
+            if (eventTimeInfo.length != 2) {
+                throw new DukeException("Invalid time format for between task.");
+            }
 
-        String from = formatOutput(parseDate(eventTimeInfo[0].trim()));
-        String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
-        return new AddTaskFunction(new DoWithInTimeTask(description, false, from, to));
+            String from = formatOutput(parseDate(eventTimeInfo[0].trim()));
+            String to = formatOutput(parseDate(eventTimeInfo[1].trim()));
+            return new AddTaskFunction(new DoWithInTimeTask(description, false, from, to));
+
+        } catch (Exception e) {
+            throw new DukeException(" Meow!!! The task format invalid.");
+        }
     }
 
     /**
@@ -155,13 +160,18 @@ public class InputParser {
      * @throws DukeException If the input format for DeadlineTask is invalid.
      */
     private Command AddDTask(String argument) throws DukeException {
-        String[] parts = argument.split("/by");
-        String deadlineInfo = parts[0].trim();
-        String by = formatOutput(parseDate(parts[1].trim()));
-        if (deadlineInfo.isEmpty() || by.isEmpty()) {
-            throw new DukeException("Meow!!! The description or deadline of a deadline cannot be empty.");
+        try {
+            String[] parts = argument.split("/by");
+
+            String deadlineInfo = parts[0].trim();
+            String by = formatOutput(parseDate(parts[1].trim()));
+            if (deadlineInfo.isEmpty() || by.isEmpty()) {
+                throw new DukeException("Meow!!! The description or deadline of a deadline cannot be empty.");
+            }
+            return new AddTaskFunction(new DeadlineTask(deadlineInfo, false, by));
+        } catch (Exception e) {
+            throw new DukeException(" Meow!!! The deadline task format invalid.");
         }
-        return new AddTaskFunction(new DeadlineTask(deadlineInfo, false, by));
     }
 
     /**
@@ -172,14 +182,18 @@ public class InputParser {
      * @throws DukeException If the input format for EventTask is invalid.
      */
     private Command AddETask(String argument) throws DukeException {
-        String[] eventInfo = argument.split("/from|/to");
-        if (eventInfo.length != 3) {
-            throw new DukeException("Invalid event format!");
+        try {
+            String[] eventInfo = argument.split("/from|/to");
+            if (eventInfo.length != 3) {
+                throw new DukeException("Invalid event format!");
+            }
+            String description = eventInfo[0].trim();
+            String from = formatOutput(parseDate(eventInfo[1].trim()));
+            String to = formatOutput(parseDate(eventInfo[2].trim()));
+            return new AddTaskFunction(new EventTask(description, false, from, to));
+        } catch (Exception e) {
+            throw new DukeException(" Meow!!! The event task format invalid.");
         }
-        String description = eventInfo[0].trim();
-        String from = formatOutput(parseDate(eventInfo[1].trim()));
-        String to = formatOutput(parseDate(eventInfo[2].trim()));
-        return new AddTaskFunction(new EventTask(description, false, from, to));
     }
 
     /**
@@ -203,6 +217,8 @@ public class InputParser {
             return new UpdateTaskFunction(transferInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The update format incorrect meow.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
@@ -239,6 +255,8 @@ public class InputParser {
             return new SnoozeTaskFunction(transferInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The Snooze format incorrect meow.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
@@ -255,6 +273,8 @@ public class InputParser {
             return new DeleteTaskFunction(index);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The delete must come with int meow.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
@@ -283,6 +303,8 @@ public class InputParser {
             }
         } catch (NumberFormatException e) {
             throw new DukeException("Must input index meow!");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
@@ -299,6 +321,8 @@ public class InputParser {
             return new MarkTaskFunction(markInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The mark must come with int meow.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
@@ -315,6 +339,8 @@ public class InputParser {
             return new MarkTaskFunction(unmarkInfo);
         } catch (NumberFormatException e) {
             throw new DukeException(" Meow!!! The find must come with keywords meow.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException(" Meow!!! The task ID invalid.");
         }
     }
 
