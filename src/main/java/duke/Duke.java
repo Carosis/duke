@@ -18,7 +18,7 @@ import duke.utility.TaskList;
 import duke.utility.UI;
 import duke.utility.DukeException;
 
-public class Duke extends Tasks {
+public class Duke {
     private final Storage storage;
     private TaskList taskList;
     private final UI ui;

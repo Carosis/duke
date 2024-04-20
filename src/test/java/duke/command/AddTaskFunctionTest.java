@@ -8,14 +8,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AddTaskFunctionTest {
-
     static Tasks tsk;
 
     @BeforeAll
     public static void setUp() {
         tsk = new Tasks("TaskTest");
     }
-
 
     @Test
     public void testCreation() {

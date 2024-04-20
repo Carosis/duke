@@ -51,27 +51,31 @@ public class SnoozeTaskFunction extends Command {
      */
     @Override
     public void execute(TaskList taskList, UI ui, Storage storage) throws DukeException {
-        Tasks task = taskList.storedTaskList.get(Integer.parseInt(userInputs[0]) - 1);
-        String taskType = task.getTaskType();
-        String[] parseSnoozeInfo = userInputs[1].split(" ");
+        try {
+            Tasks task = taskList.storedTaskList.get(Integer.parseInt(userInputs[0]) - 1);
+            String taskType = task.getTaskType();
+            String[] parseSnoozeInfo = userInputs[1].split(" ");
 
-        String[] transferDate = snoozeType(taskType, task);
-        String newDT;
-        switch (parseSnoozeInfo[1]) {
-            case "hrs":
-                newDT = addHours(parseSnoozeInfo[0], transferDate[1]);
-                break;
-            case "days":
-                newDT = addDays(parseSnoozeInfo[0], transferDate[1]);
-                break;
-            case "mins":
-                newDT = addMinutes(parseSnoozeInfo[0], transferDate[1]);
-                break;
-            default:
-                throw new DukeException(INVALID_INPUT_MESSAGE);
+            String[] transferDate = snoozeType(taskType, task);
+            String newDT;
+            switch (parseSnoozeInfo[1]) {
+                case "hrs":
+                    newDT = addHours(parseSnoozeInfo[0], transferDate[1]);
+                    break;
+                case "days":
+                    newDT = addDays(parseSnoozeInfo[0], transferDate[1]);
+                    break;
+                case "mins":
+                    newDT = addMinutes(parseSnoozeInfo[0], transferDate[1]);
+                    break;
+                default:
+                    throw new DukeException(INVALID_INPUT_MESSAGE);
+            }
+            UpdateTaskFunction updateTaskFunction = new UpdateTaskFunction(new String[]{userInputs[0], transferDate[0], newDT});
+            updateTaskFunction.execute(taskList, ui, storage);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Invalid tasks index meow!");
         }
-        UpdateTaskFunction updateTaskFunction = new UpdateTaskFunction(new String[]{userInputs[0], transferDate[0], newDT});
-        updateTaskFunction.execute(taskList, ui, storage);
     }
 
     /**
@@ -109,7 +113,7 @@ public class SnoozeTaskFunction extends Command {
     private String addHours(String hours, String toAdd) throws DukeException {
 
         LocalDateTime temp = inputParser.parseDate(toAdd);
-        temp = temp.plusMinutes(Integer.parseInt(hours));
+        temp = temp.plusHours(Integer.parseInt(hours));
         return inputParser.formatOutput(temp);
     }
 
@@ -153,7 +157,7 @@ public class SnoozeTaskFunction extends Command {
             case "B":
                 if (tsk instanceof DoWithInTimeTask) {
                     DoWithInTimeTask tempB = (DoWithInTimeTask) tsk;
-                    return new String[]{"between", tempB.getTo()};
+                    return new String[]{"between", tempB.getFrom()};
                 }
                 break;
         }

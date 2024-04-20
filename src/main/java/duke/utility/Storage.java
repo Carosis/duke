@@ -39,7 +39,7 @@ public class Storage {
      * @param FilePath The file path for storing tasks.
      */
     public Storage(String FilePath) {
-        assert FilePath != null : "FilePath cannot be meoll";
+        assert FilePath != null : "FilePath cannot be meoll";// Assert that the file exists before attempting
 
         this.FilePath = FilePath;
     }

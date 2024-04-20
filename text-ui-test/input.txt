@@ -1,10 +1,37 @@
-testing
-add
-fish
-fish1
-fish1
-fish2
 list
-back
-back
+todo hunt goblins
+deadline goblin festival /by tomorrow
+event goblin king dungeon /from today /to 12-12-2024
+defeat the goblin king between today and 12-12-2024 18:00
+list
+mark 1
+list 1
+unmark 1
+list
+list 1
+find goblin
+find festival
+update 1 description hunt 100 goblins
+list 1
+list
+update 2 by 11-12-2024
+list 2
+list
+update 3 from tomorrow to 12-12-2024
+list 3
+list
+update 3 from 12-09-2024
+list 3
+update 3 to 15-12-2024
+list 3
+update 4 between now and 13-12-2024
+list 4
+list
+snooze 2 for 3 days
+list 2
+snooze 4 for 1 hrs
+list 4
+list
+delete 1
+list
 bye
