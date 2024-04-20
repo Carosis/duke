@@ -115,10 +115,10 @@ public class InputParser {
      * @throws DukeException If the description of the todo task is empty.
      */
     private Command AddTTask(String argument) throws DukeException {
-        try {
+        if (argument.trim().isEmpty()) {
+            throw new DukeException("Meow!!! The description of a todo cannot be empty.");
+        } else {
             return new AddTaskFunction(new TodoTask(argument, false));
-        } catch (Exception e) {
-            throw new DukeException(" Meow!!! The description of a todo cannot be empty.");
         }
     }
 
